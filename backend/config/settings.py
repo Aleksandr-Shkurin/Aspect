@@ -227,7 +227,7 @@ CHANNEL_LAYERS = {
     },
 }
 
-# Dev vs Prod
+
 if config('DJANGO_ENV', default='dev') == 'prod':
     DEBUG = False
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'aspectfy.ru', 'www.aspectfy.ru', '5.42.111.113']

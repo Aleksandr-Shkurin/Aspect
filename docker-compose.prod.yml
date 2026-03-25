@@ -3,8 +3,6 @@ services:
     image: postgres:16-alpine
     env_file:
       - backend/.env
-    ports:
-      - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -89,25 +87,6 @@ services:
     depends_on:
       - backend
       - redis
-    restart: unless-stopped
-
-  flower:
-    build:
-      context: ./backend
-    command: celery -A config.celery flower --address=0.0.0.0 --port=5555
-    ports:
-      - "127.0.0.1:5555:5555"
-    env_file:
-      - backend/.env
-    environment:
-      DJANGO_ENV: prod
-      DB_HOST: db
-      REDIS_HOST: redis
-      CELERY_BROKER_URL: redis://redis:6379/0
-      CELERY_RESULT_BACKEND: redis://redis:6379/0
-    depends_on:
-      - redis
-      - celery
     restart: unless-stopped
 
   frontend:
